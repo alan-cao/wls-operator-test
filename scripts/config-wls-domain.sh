@@ -32,7 +32,6 @@ cp $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-h
 sed -i -e "s/namespace: default/namespace: ${TEST_DOMAIN_NS}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/domainUID: domain1/domainUID: ${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/weblogicCredentialsSecretName: domain1-weblogic-credentials/weblogicCredentialsSecretName: ${TEST_DOMAIN}-weblogic-credentials/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
-sed -i -e "s/#image:/image:yulongtsao\/${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
 echo "running: $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -u weblogic -p welcome1 -e"
 $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -u weblogic -p welcome1 -e
