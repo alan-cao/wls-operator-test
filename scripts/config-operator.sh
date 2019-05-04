@@ -33,7 +33,7 @@ kubectl create serviceaccount -n sample-weblogic-operator-ns sample-weblogic-ope
 helm install ${WLS_OPERATOR_HOME}/kubernetes/charts/weblogic-operator \
   --name sample-weblogic-operator \
   --namespace sample-weblogic-operator-ns \
-  --set image=oracle/weblogic-kubernetes-operator:2.1 \
+  --set image=${WEBLOGIC_OPERATOR_IMAGE} \
   --set serviceAccount=sample-weblogic-operator-sa \
   --set "domainNamespaces={}" \
   --wait
