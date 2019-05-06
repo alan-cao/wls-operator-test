@@ -7,9 +7,12 @@
 - **Kubernetes**
 
 ## Build Weblogic Operator
-
-<TBD>
-
+``` bash
+mvn clean install
+# The dockerfile will install something with yum, which doesn't work for proxy. 
+# The workaround so far is to comment out the yum install in dockfile
+docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-cache=true .
+```
 **For simplicity, all the instructions below should be executed on K8S Node**
 
 ## Create Domain with Domain Home in Docker Image
