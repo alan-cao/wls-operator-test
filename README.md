@@ -1,5 +1,6 @@
 ## Prerequisites:
 - **Maven**
+- **JDK11** required by Maven pom.xml
 - **Docker**
 - **WLS Docker Image: https://hub.docker.com/_/oracle-weblogic-server-12c**
 - **Oracle Database Image: https://hub.docker.com/_/oracle-database-enterprise-edition**
