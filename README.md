@@ -6,8 +6,9 @@
 - **Kubernetes**
 
 ## Build Weblogic Operator
+<TBD>
 
-**For simplicity, all the instructions below should be executed on K8S Node
+**For simplicity, all the instructions below should be executed on K8S Node**
 
 ## Create Domain with Domain Home in Docker Image
 
