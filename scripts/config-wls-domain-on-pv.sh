@@ -1,3 +1,4 @@
+TEST_DOMAIN_NS=${TEST_DOMAIN}-ns
 TEST_DIR=./outputs
 
 mkdir $TEST_DIR
@@ -26,14 +27,16 @@ $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain-credentials
   -u weblogic -p welcome1 -n $TEST_DOMAIN_NS -d $TEST_DOMAIN
 
 
-cp $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image/create-domain-inputs.yaml ${TEST_DIR}/${TEST_DOMAIN}.yaml
+cp $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-on-pv/create-domain-inputs.yaml ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
 sed -i -e "s/namespace: default/namespace: ${TEST_DOMAIN_NS}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/domainUID: domain1/domainUID: ${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/weblogicCredentialsSecretName: domain1-weblogic-credentials/weblogicCredentialsSecretName: ${TEST_DOMAIN}-weblogic-credentials/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
+sed -i -e "s/persistentVolumeClaimName: domain1-weblogic-sample-pvc/persistentVolumeClaimName: weblogic-sample-pvc/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
+sed -i -e "s/domain1/${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
-echo "running: $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -u weblogic -p welcome1 -e"
-$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -u weblogic -p welcome1 -e
+echo "running: $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-on-pv/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -e"
+$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-on-pv/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -e
 
 
 kubectl describe domain $TEST_DOMAIN -n $TEST_DOMAIN_NS 
