@@ -41,5 +41,5 @@
 
 
 ## References
-https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
-https://oracle.github.io/weblogic-kubernetes-operator/developerguide/building/
+- https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
+- https://oracle.github.io/weblogic-kubernetes-operator/developerguide/building/
