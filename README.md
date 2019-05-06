@@ -7,6 +7,7 @@
 - **Kubernetes**
 
 ## Build Weblogic Operator
+
 <TBD>
 
 **For simplicity, all the instructions below should be executed on K8S Node**
@@ -37,3 +38,8 @@
 ### Clean Domain
 - . [cleanup-wls-domain.sh](./scripts/cleanup-wls-domain.sh)
 - . [cleanup-operator.sh](./scripts/cleanup-operator.sh)
+
+
+## References
+https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
+https://oracle.github.io/weblogic-kubernetes-operator/developerguide/building/
