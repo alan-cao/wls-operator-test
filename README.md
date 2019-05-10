@@ -51,6 +51,7 @@ docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-
 See https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure
 https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/dockerfiles/12.2.1.3
 
+https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
 
 ## References
 - https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
