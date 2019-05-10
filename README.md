@@ -54,6 +54,14 @@ https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/samp
 
 https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
 
+
+### Install database
+docker pull container-registry.oracle.com/database/enterprise:12.2.0.1-slim
+docker pull store/oracle/database-instantclient:12.2.0.1
+
+kubectl create namespace database-namespace
+kubectl apply -f [scripts/my-database.yaml](./scripts/my-database.yaml)
+
 ## References
 - https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
 - https://oracle.github.io/weblogic-kubernetes-operator/developerguide/building/
