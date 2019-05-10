@@ -27,7 +27,7 @@ $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain-credentials
 
 
 # create RCU credentials
-$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-rcu-credentials/create-rcu-credentials.sh -a sys -q Oradoc_db1 -u fmwdomain_wls -p welcome1 -d ${TEST_DOMAIN} -s ${TEST_DOMAIN}-rcu-credentials -n ${TEST_DOMAIN_NS}
+$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-rcu-credentials/create-rcu-credentials.sh -a sys -q Oradoc_db1 -u ${TEST_DOMAIN} -p welcome1 -d ${TEST_DOMAIN} -s ${TEST_DOMAIN}-rcu-credentials -n ${TEST_DOMAIN_NS}
 
 
 cp $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-fmw-infrastructure-domain/create-domain-inputs.yaml ${TEST_DIR}/${TEST_DOMAIN}.yaml
@@ -39,7 +39,7 @@ sed -i -e "s/persistentVolumeClaimName: domain1-weblogic-sample-pvc/persistentVo
 sed -i -e "s/domain1/${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s;database:1521/service;database.database-namespace:1521/orclpdb.us.oracle.com;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
-$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-fmw-infrastructure-domain/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory 
+$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-fmw-infrastructure-domain/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -e
 
 
 kubectl describe domain $TEST_DOMAIN -n $TEST_DOMAIN_NS 
