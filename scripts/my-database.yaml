@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: database
+  namespace: database-namespace
+  labels:
+    app: database
+    version: 12.1.0.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+      version: 12.1.0.2
+  template:
+    metadata:
+      name: database
+      labels:
+        app: database
+        version: 12.1.0.2
+    spec:
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+      # add your volume mount for your persistent storage here
+      containers:
+      - name: database
+        command:
+        - /home/oracle/setup/dockerInit.sh
+        image: container-registry.oracle.com/database/enterprise:12.2.0.1-slim
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: 2Gi
+        ports:
+        - containerPort: 1521
+          hostPort: 1521
+        volumeMounts:
+          - mountPath: /dev/shm
+            name: dshm
+          # add your persistent storage for DB files here
+        env:
+          - name: DB_SID
+            value: orcl
+          - name: DB_PDB
+            value: orclpdb
+#          - name: DB_PASSWD
+#            value: Welcome1
+          - name: DB_DOMAIN
+            value: us.oracle.com
+          - name: DB_BUNDLE
+            value: basic
+          - name: DB_MEMORY
+            value: 4g
+      imagePullSecrets:
+      - name: regsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: database-namespace
+spec:
+  selector:
+    app: database
+    version: 12.1.0.2
+  ports:
+  - protocol: TCP
+    port: 1521
+    targetPort: 1521
