@@ -22,3 +22,9 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
 
 ***Link:***
 https://github.com/kubernetes/kubernetes/issues/54918
+
+**Problem:**
+Deleting persistent volume stuck
+
+***Solution:***
+manually edited the pv individually and then removing the finalizers
