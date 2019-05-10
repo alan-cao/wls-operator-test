@@ -37,10 +37,9 @@ sed -i -e "s/domainUID: domain1/domainUID: ${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_
 sed -i -e "s/weblogicCredentialsSecretName: domain1-weblogic-credentials/weblogicCredentialsSecretName: ${TEST_DOMAIN}-weblogic-credentials/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/persistentVolumeClaimName: domain1-weblogic-sample-pvc/persistentVolumeClaimName: weblogic-sample-pvc/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s/domain1/${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
-sed -i -e "s;database:1521/service;10.0.0.2:1521/orclcdb;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
+sed -i -e "s;database:1521/service;database.database-namespace:1521/orclpdb.us.oracle.com;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
-echo "running: $WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-weblogic-domain/domain-home-on-pv/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory -e"
-$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-fmw-infrastructure-domain/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory  -e
+$WLS_OPERATOR_HOME/kubernetes/samples/scripts/create-fmw-infrastructure-domain/create-domain.sh -i ${TEST_DIR}/${TEST_DOMAIN}.yaml -o $TEST_DIR/directory 
 
 
 kubectl describe domain $TEST_DOMAIN -n $TEST_DOMAIN_NS 
