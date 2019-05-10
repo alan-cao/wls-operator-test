@@ -5,6 +5,8 @@
 - **WLS Docker Image: https://hub.docker.com/_/oracle-weblogic-server-12c**
 - **Oracle Database Image: https://hub.docker.com/_/oracle-database-enterprise-edition**
 - **Kubernetes**
+- **Helm**
+- **Environments** Can use Google cloud
 
 ## Build Weblogic Operator
 ``` bash
@@ -41,6 +43,13 @@ docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-
 ### Clean Domain
 - . [cleanup-wls-domain.sh](./scripts/cleanup-wls-domain.sh)
 - . [cleanup-operator.sh](./scripts/cleanup-operator.sh)
+
+
+## Create FMW Domain
+
+### Build FMW Image
+See https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure
+https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/dockerfiles/12.2.1.3
 
 
 ## References
