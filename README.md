@@ -50,6 +50,7 @@ docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-
 ### Build FMW Image
 See https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure
 https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/dockerfiles/12.2.1.3
+https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/samples/12213-patch-fmw-for-k8s
 
 https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
 
