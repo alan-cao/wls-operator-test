@@ -85,6 +85,12 @@ kubectl run --generator=run-pod/v1 rcu -ti --image oracle/fmw-infrastructure:12.
 ```
 #### 2. Connect to the POD to Execute Commands ####
 The RCU pod uses FMW docker image, 
+
+Connect to rcu pod
+```bash
+kubectl exec -ti rcu /bin/bash
+```
+
 ./oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString database.database-***namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -useSamePasswordForAllSchemaUsers true -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
 
 For domain creation script uses domain name as schema prefix. So please select proper value for RCU run.
@@ -92,6 +98,7 @@ For domain creation script uses domain name as schema prefix. So please select p
 You will be asked for sys password (***Oradoc_db1***), and schema passwords.
 
 Similarly, schemas can be dropped with RCU:
+
 ./oracle_common/bin/rcu -silent ***-dropRepository*** -databaseType ORACLE -connectString ***database.database-namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
 
 #### 3. Stop the RCU POD ####
