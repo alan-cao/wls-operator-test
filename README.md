@@ -78,6 +78,8 @@ kubectl run --generator=run-pod/v1 rcu -ti --image oracle/fmw-infrastructure:12.
 The RCU pod uses FMW docker image, 
 ./oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString database.database-***namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -useSamePasswordForAllSchemaUsers true -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
 
+For domain creation, 
+
 You will be asked for sys password (***Oradoc_db1***), and schema passwords.
 
 Similarly, schemas can be dropped with RCU:
@@ -85,6 +87,23 @@ Similarly, schemas can be dropped with RCU:
 
 #### 3. Stop the RCU POD ####
 kubectl delete pod rcu
+
+### Configure FMW Domain ###
+Copy set-env.sh-template set-fmw-env.sh
+Edit set-fmw-env.sh
+source set-fmw-env.sh
+
+#### 1. Prepare Persistent Volume ####
+Create directory for PV as defined in set-fmw-env.sh
+. create-pv-pvc.sh
+
+#### 2. Prepare Operator ####
+. [config-operator.sh](./scripts/config-operator.sh)
+
+#### 3. Create Domain ####
+Will use DB schema created previous. The schema prefix is same as domain name.
+
+. [config-fmw-domain.sh](./scripts/config-fmw-domain.sh)
 
 ## References
 - https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
