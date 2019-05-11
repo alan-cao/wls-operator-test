@@ -1,3 +1,4 @@
+
 ## Prerequisites:
 - **Maven**
 - **JDK11** required by Maven pom.xml
@@ -61,6 +62,29 @@ docker pull store/oracle/database-instantclient:12.2.0.1
 
 kubectl create namespace database-namespace
 kubectl apply -f [scripts/my-database.yaml](./scripts/my-database.yaml)
+
+***Database default sys password: Oradoc_db1***
+
+***Database URL database.database-namespace:1521/orclpdb.us.oracle.com***
+Please see https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/overview/database.md
+
+### Run RCU to Prepare DB Schemas ###
+Please see https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
+
+#### 1. Start a RCU POD ####
+kubectl run --generator=run-pod/v1 rcu -ti --image oracle/fmw-infrastructure:12.2.1.3 -- sleep 100000
+
+#### 2. Connect to the POD to Execute Commands ####
+The RCU pod uses FMW docker image, 
+./oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString database.database-***namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -useSamePasswordForAllSchemaUsers true -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
+
+You will be asked for sys password (***Oradoc_db1***), and schema passwords.
+
+Similarly, schemas can be dropped with RCU:
+./oracle_common/bin/rcu -silent ***-dropRepository*** -databaseType ORACLE -connectString ***database.database-namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
+
+#### 3. Stop the RCU POD ####
+kubectl delete pod rcu
 
 ## References
 - https://oracle.github.io/weblogic-kubernetes-operator/quickstart/
