@@ -28,3 +28,5 @@ Deleting persistent volume stuck
 
 ***Solution:***
 manually edited the pv individually and then removing the finalizers
+
+
