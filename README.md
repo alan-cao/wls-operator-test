@@ -42,10 +42,8 @@ docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-
 - Configure WLS domain: [config-wls-domain-on-pv.sh](./scripts/config-wls-domain-on-pv.sh)
 
 ### Clean Domain
-```bash
 - . [cleanup-wls-domain.sh](./scripts/cleanup-wls-domain.sh)
 - . [cleanup-operator.sh](./scripts/cleanup-operator.sh)
-```
 
 ## Create FMW Domain
 
