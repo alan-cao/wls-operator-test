@@ -42,9 +42,10 @@ docker build --build-arg VERSION=2.2 -t weblogic-kubernetes-operator:<TAG> --no-
 - Configure WLS domain: [config-wls-domain-on-pv.sh](./scripts/config-wls-domain-on-pv.sh)
 
 ### Clean Domain
+```bash
 - . [cleanup-wls-domain.sh](./scripts/cleanup-wls-domain.sh)
 - . [cleanup-operator.sh](./scripts/cleanup-operator.sh)
-
+```
 
 ## Create FMW Domain
 
@@ -55,14 +56,23 @@ https://github.com/oracle/docker-images/tree/master/OracleFMWInfrastructure/samp
 
 https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
 
+```bash
+# Or you can pull the images and re-tag
+docker pull yulongtsao/fmw-infrastructure:12213-update-k8s
+docker pull yulongtsao/fmw-infrastructure:12.2.1.3
+
+docker tag yulongtsao/fmw-infrastructure:12213-update-k8s oracle/fmw-infrastructure:12213-update-k8s
+docker tag yulongtsao/fmw-infrastructure:12.2.1.3 oracle/fmw-infrastructure:12.2.1.3
+```
 
 ### Install database
+```bash
 docker pull container-registry.oracle.com/database/enterprise:12.2.0.1-slim
 docker pull store/oracle/database-instantclient:12.2.0.1
 
 kubectl create namespace database-namespace
 kubectl apply -f [scripts/my-database.yaml](./scripts/my-database.yaml)
-
+```
 ***Database default sys password: Oradoc_db1***
 
 ***Database URL database.database-namespace:1521/orclpdb.us.oracle.com***
@@ -72,13 +82,14 @@ Please see https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2
 Please see https://github.com/oracle/weblogic-kubernetes-operator/blob/release/2.2/docs-source/content/userguide/managing-domains/fmw-infra/_index.md
 
 #### 1. Start a RCU POD ####
+```bash
 kubectl run --generator=run-pod/v1 rcu -ti --image oracle/fmw-infrastructure:12.2.1.3 -- sleep 100000
-
+```
 #### 2. Connect to the POD to Execute Commands ####
 The RCU pod uses FMW docker image, 
 ./oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString database.database-***namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -useSamePasswordForAllSchemaUsers true -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
 
-For domain creation, 
+For domain creation script uses domain name as schema prefix. So please select proper value for RCU run.
 
 You will be asked for sys password (***Oradoc_db1***), and schema passwords.
 
@@ -86,8 +97,9 @@ Similarly, schemas can be dropped with RCU:
 ./oracle_common/bin/rcu -silent ***-dropRepository*** -databaseType ORACLE -connectString ***database.database-namespace.svc.cluster.local:1521/orclpdb.us.oracle.com*** -dbUser sys -dbRole sysdba -schemaPrefix ***fmwdomain***  -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component  OPSS -component  WLS -component STB
 
 #### 3. Stop the RCU POD ####
+```bash
 kubectl delete pod rcu
-
+```
 ### Configure FMW Domain ###
 Copy set-env.sh-template set-fmw-env.sh
 Edit set-fmw-env.sh
@@ -95,7 +107,7 @@ source set-fmw-env.sh
 
 #### 1. Prepare Persistent Volume ####
 Create directory for PV as defined in set-fmw-env.sh
-. create-pv-pvc.sh
+. [create-pv-pvc.sh](./scripts/create-pv-pvc)
 
 #### 2. Prepare Operator ####
 . [config-operator.sh](./scripts/config-operator.sh)
