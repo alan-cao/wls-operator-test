@@ -30,3 +30,10 @@ Deleting persistent volume stuck
 manually edited the pv individually and then removing the finalizers
 
 
+**Problem**
+Node in NotReady State
+
+***Solution:***
+hostnamectl set-hostname 'k8s-master'
+systemctl restart docker; systemctl enable docker
+systemctl restart kubelet; systemctl enable kubelet
