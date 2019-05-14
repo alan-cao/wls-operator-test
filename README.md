@@ -69,6 +69,8 @@ docker pull container-registry.oracle.com/database/enterprise:12.2.0.1-slim
 docker pull store/oracle/database-instantclient:12.2.0.1
 
 kubectl create namespace database-namespace
+# create persistent volume, please update the directory accordingly
+kubectl apply -f db-pv-pvc.yaml
 kubectl apply -f [scripts/my-database.yaml](./scripts/my-database.yaml)
 ```
 ***Database default sys password: Oradoc_db1***
