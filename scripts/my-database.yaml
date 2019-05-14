@@ -39,7 +39,9 @@ spec:
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
-          # add your persistent storage for DB files here
+        volumeMounts:
+          - mountPath: /ORCL
+            name: db-storage
         env:
           - name: DB_SID
             value: orcl
@@ -53,6 +55,10 @@ spec:
             value: basic
           - name: DB_MEMORY
             value: 4g
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: ora-db-pvc
       imagePullSecrets:
       - name: regsecret
 ---
