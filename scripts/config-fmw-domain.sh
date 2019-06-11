@@ -39,6 +39,7 @@ sed -i -e "s/persistentVolumeClaimName: domain1-weblogic-sample-pvc/persistentVo
 sed -i -e "s/domain1/${TEST_DOMAIN}/g" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s;database:1521/service;database.database-namespace:1521/orclpdb.us.oracle.com;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 sed -i -e "s;oracle/fmw-infrastructure:12.2.1.3;oracle/fmw-infrastructure:12213-update-k8s;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
+sed -i -e "s;exposeAdminNodePort: false;exposeAdminNodePort: true;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
 
 #debug 29683926
 sed -i -e "s;createDomainScriptsMountPath: /u01/weblogic;createDomainScriptsMountPath: /u01/weblogic11;" ${TEST_DIR}/${TEST_DOMAIN}.yaml
